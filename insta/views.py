@@ -10,3 +10,6 @@ def welcome(request):
 def comments(request,id):
     all_comments = Comment.get_comments(id)
     return render(request, 'comments.html', {"comments":all_comments})
+
+def profile (request, uname):
+    profile = Profile.objects.filetr(user = uname)
