@@ -1,2 +1,18 @@
-<h2>welcome to instagram
-</h2>
+{%extends 'base.html'%}
+<!--Display  images  -->
+{% block content %}
+<div class="container">
+    <h1 class="text-center">instagram</h1>
+<div class="card-columns">
+    <div class="row">
+        {% for post in posts %}
+        <img src="{{post.user.profile.url}}" alt="{{post.user.user.username}}" width="25px" height="20px">
+        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight: bolder;">{{post.user.user.username}}</p>
+    <div class="col-md-6">
+        <img src="{{post.image.url}}" alt="{{post.name}}" width="300px">
+    </div>
+    </div>
+</div>
+</div>
+{%endfor%}
+{%endblock%}
