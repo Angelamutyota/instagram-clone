@@ -10,6 +10,7 @@
         <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight: bolder;">{{post.user.user.username}}</p>
     <div class="col-md-6">
         <img src="{{post.image.url}}" alt="{{post.name}}" width="300px">
+        <a href="{% url 'comments' post.id %}"><button type="button" class="btn btn-success">comments</button></a> <br>
     </div>
     </div>
 </div>

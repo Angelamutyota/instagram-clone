@@ -4,8 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-   path('', views.welcome , name='index'),
-   path('comment/<id>',views.comments,name="comments"),
+   path('', views.welcome, name='index'),
+   path('comment/<int:id>',views.comments,name="comments"),
    path('new/image/', views.upload_image, name='new-image'),
 ]
 if settings.DEBUG:

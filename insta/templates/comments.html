@@ -1,20 +1,7 @@
-{% extends 'base.html' %}
-
-{% block content %}
-{{block.super}}
-<h1>hey You</h1>
-<div class="col-md-6">
-{% for post in posts %}
-
-{% for comment in image.comments.all %}
-<div class="comment">
-    
-<div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span class="text-secondary">
-    {{ comment.comment }}</span>
-</div>
-</div>
-{% empty %}
-<p class="ml-3">No comments here yet</p>
- {% endfor %}
-{% endfor %}
-{% endblock %}
+{% if all_comments %}
+{% for comment in all_comments %}
+    {{comment.comment}} <br>
+{%endfor%}
+{%else%}
+No comments 
+{%endif%}

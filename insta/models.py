@@ -58,7 +58,7 @@ class Comment(models.Model):
         self.save()
         
     def __str__(self):
-        return self.image
+        return self.comment
     def delete_comment(self):
         self.delete()
     
