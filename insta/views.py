@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def registerPage(request):
-    form = UserCreationForm
+    form = CreateUserForm
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
