@@ -1,4 +1,4 @@
-from insta.forms import UploadImageForm
+from insta.forms import UploadImageForm, CreateUserForm
 from django.shortcuts import redirect, render
 from django.http  import HttpResponse
 from .models import Post, Profile, Comment, Follow
@@ -10,7 +10,7 @@ def registerPage(request):
     form = UserCreationForm
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
     context = {'form':form}
