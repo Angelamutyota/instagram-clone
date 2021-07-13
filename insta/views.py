@@ -41,6 +41,7 @@ def logoutpage(request):
     logout(request)
     return redirect('login')
 
+@login_required(login_url="login")
 def welcome(request):
     posts=Post.objects.all()
     return render(request, 'index.html',  {"posts":posts})
