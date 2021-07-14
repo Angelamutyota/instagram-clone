@@ -121,5 +121,10 @@ def search_profile(request):
 @login_required(login_url='login')
 def user_profile(request, username):
     user_prof = get_object_or_404(User, username=username)
-   
-
+    if request.user == user_prof:
+        return redirect('user_profile', username=request.user.username)
+    user_posts = user_prof.profile.posts.all()
+    followers = Follow.objects.filter(followers=user_prof.profile)
+    follow_status = None
+    for follower in followers:
+        if request.user.profile == follower.following:
