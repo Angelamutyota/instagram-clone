@@ -1,6 +1,6 @@
-from insta.forms import UploadImageForm, CreateUserForm, UpdateProfileForm
-from django.shortcuts import redirect, render
-from django.http  import HttpResponse
+from insta.forms import UploadImageForm, CreateUserForm, UpdateProfileForm, NewCommentForm, UpdateUserForm
+from django.shortcuts import redirect, render, get_object_or_404
+from django.http  import HttpResponse, HttpResponseRedirect
 from .models import Post, Profile, Comment, Follow
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -10,11 +10,8 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def registerPage(request):
-    form = CreateUserForm
-    profile = Profile()
-    profile.user = User
-    profile.save()
-
+    form = CreateUserForm()
+    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
@@ -44,28 +41,53 @@ def logoutpage(request):
     logout(request)
     return redirect('login')
 
+@login_required(login_url="login")
 def welcome(request):
     posts=Post.objects.all()
-    return render(request, 'index.html',  {"posts":posts})
+    user = User.objects.all()
+    return render(request, 'index.html',  {"posts":posts,"user":user })
 
 @login_required(login_url="login")
-def comments(request):
-    image_id= request.GET.get("comments_image_id")
+def comments(request,id):
+    all_comments = Comment.get_comments(id)
+    image = get_object_or_404(Post, pk=id)
+    
+    form = NewCommentForm()
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.image = image
+            comment.author = request.user
+            comment.save()
+        return HttpResponseRedirect(request.path_info)
+    else:
+        form = NewCommentForm()
+    return render(request,"comments.html",{"all_comments":all_comments,"form":form})       
 
-    all_comments = Comment.get
-    comments = []
-    return render(request,"comments.html",{"all_comments":all_comments})
-
-@login_required(login_url="login")
+@login_required(login_url='login')
 def profile(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile(user=request.user)
     images = request.user.profile.images.all()
     if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
         prof_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if prof_form.is_valid():
+        if user_form.is_valid() and prof_form.is_valid():
+            user_form.save()
             prof_form.save()
-            return redirect(request.path_info)
+            return HttpResponseRedirect(request.path_info)
     else:
-        profile_form = UpdateProfileForm(instance=request.user.profile)
+        user_form = UpdateUserForm(instance=request.user)
+        prof_form = UpdateProfileForm(instance=request.user.profile)
+    context = {
+        'prof_form': prof_form,
+        'images': images,
+        'user_form': user_form,
+    }
+    return render(request, 'profile.html', context)
 
     return render(request, 'profile.html', {"images":images,"profile_form":profile_form})
 

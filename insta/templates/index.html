@@ -3,17 +3,26 @@
 {% block content %}
 <div class="container">
  <div class="card-columns">
+   {% for post in posts %}
     <div class="row">
-        {% for post in posts %}
         <img src="{{post.user.profile.url}}" alt="{{post.user.user.username}}" width="25px" height="20px">
         <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight: bolder;">{{post.user.user.username}}</p>
-    <div class="col-md-6">
-        <img src="{{post.image.url}}" alt="{{post.name}}" width="300px">
-        <a href="{% url 'comments' post.id %}"><button type="button" class="btn btn-success">comments</button></a> <br>
-    </div>
-    </div>
- </div>
-{%endfor%}
-</div>
+       <div class="col-md-6">
+        <img src="{{post.image.url}}" alt="{{post.name}}" width="300px" >
+     </div>
 
+    </div>
+    <a href="{% url 'comments' post.id %}"><i class="fa fa-comments-o fa-2x" aria-hidden="true" style="color: black; margin-bottom: 20px;"></i></a>
+
+  {%endfor%}
+
+  {% for user in users %}
+    <div class="row p-1" style="width: 18rem; border: 1px solid grey;">
+        <img class="rounded-circle" src="{{ user.profile.profile.url }}" width="45px" height="45px">
+        <p><span><a href="{% url 'user_profile' user.username  %}">{{user.username}}</a></span></p>
+    </div>
+    {% endfor %}
+</div>
+</div>
+ 
 {%endblock%}
