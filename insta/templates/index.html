@@ -2,8 +2,7 @@
 <!--Display  images  -->
 {% block content %}
 <div class="container">
-    <h1 class="text-center">instagram</h1>
-<div class="card-columns">
+ <div class="card-columns">
     <div class="row">
         {% for post in posts %}
         <img src="{{post.user.profile.url}}" alt="{{post.user.user.username}}" width="25px" height="20px">
@@ -13,7 +12,8 @@
         <a href="{% url 'comments' post.id %}"><button type="button" class="btn btn-success">comments</button></a> <br>
     </div>
     </div>
-</div>
-</div>
+ </div>
 {%endfor%}
+</div>
+
 {%endblock%}
