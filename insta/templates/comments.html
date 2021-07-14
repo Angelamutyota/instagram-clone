@@ -2,40 +2,27 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+
 <div class="container" style="margin-top:7%;">
-    <div class="card">
-            <div class="col-md-3 mt-2">
-                <div class="row">
-                <img src="{{post.user.profile.url}}" alt="{{post.user.user.username}}" width="25px" height="20px">
-                <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight: bolder;">{{post.user.user.username}}</p>
-               <div class="col-md-6">
-                <img src="{{post.image.url}}" alt="{{post.name}}" width="300px" >
-             </div>
-                {% for comment in comments %}
-                <div class="comment">
-                    <div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span class="text-secondary">{{ comment.comment }}</span>
-                    </div>
-                </div>
-                {% empty %}
-                <p class="ml-3">No comments here yet</p>
-                {% endfor %}
-                <hr style="width:96%; margin-top:84%;">
-                <div>
-                </div>
-                <form class="form" action="" method="post" novalidate>
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-10">
-                            {{ form|crispy }}
-                        </div>
-                        <div class="col-md-2 mt-4" >
-                            <button type="submit" class="btn btn-sm btn-outline-primary" style="margin-top:14px; margin-left:-10px">post</button>
-                        </div>
-                    </div>
-                </form>
+
+    {% if all_comments %}
+    {% for comment in all_comments %}
+        {{comment.comment}} <br>
+    {%endfor%}
+    {%else%}
+    No comments 
+    {%endif%}
+
+    <form class="form" action="" method="post" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-10">
+                {{ form|crispy }}
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-2 mt-4" >
+                <button type="submit" class="btn btn-sm btn-outline-primary" style="margin-top:14px; margin-left:-10px">post</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 {% endblock %}
