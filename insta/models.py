@@ -74,7 +74,7 @@ class Comment(models.Model):
     
     @classmethod
     def get_comments(cls,image_id):
-        return cls.objects.filter(image__pk=image_id).all()
+        return cls.objects.filter(post__pk=image_id).all()
 
 
 

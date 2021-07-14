@@ -48,9 +48,13 @@ def welcome(request):
     posts=Post.objects.all()
     return render(request, 'index.html',  {"posts":posts})
 
-def comments(request,id):
-    all_comments = Comment.get_comments(id)
-    return render(request, 'comments.html', {"comments":all_comments})
+@login_required(login_url="login")
+def comments(request):
+    image_id= request.GET.get("comments_image_id")
+
+    all_comments = Comment.get
+    comments = []
+    return render(request,"comments.html",{"all_comments":all_comments})
 
 @login_required(login_url="login")
 def profile(request):
