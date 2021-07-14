@@ -128,3 +128,15 @@ def user_profile(request, username):
     follow_status = None
     for follower in followers:
         if request.user.profile == follower.following:
+
+            follow_status = True
+        else:
+            follow_status = False
+    context = {
+        'user_prof': user_prof,
+        'user_posts': user_posts,
+        'followers': followers,
+        'follow_status': follow_status
+    }
+    return render(request, 'user_profile.html', context)
+    
