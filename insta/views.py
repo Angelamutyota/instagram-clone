@@ -139,4 +139,11 @@ def user_profile(request, username):
         'follow_status': follow_status
     }
     return render(request, 'user_profile.html', context)
-    
+
+def follow(request, pk):
+    if request.method == 'GET':
+        user = Profile.objects.get(pk=pk)
+        follow = Follow(following=request.user.profile, followers=user)
+        follow.save()
+        
+    return redirect('user_profile', user.user.username)
