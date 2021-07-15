@@ -40,10 +40,6 @@ python manage.py makemigrations pictures
  Now Migrate  
  ```bash 
  python manage.py migrate 
-```
-##### Run the application  
- ```bash 
- python manage.py runserver 
 ``` 
 ##### Creating a super user
  ```bash
