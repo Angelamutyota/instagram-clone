@@ -1,7 +1,12 @@
 import os
 import django_heroku
 import dj_database_url
+
 from decouple import config,Csv
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 """
 Django settings for instagram project.
@@ -44,7 +49,8 @@ INSTALLED_APPS = [
     'insta',
     'bootstrap3',
     'tinymce',
-    'crispy_forms'
+    'crispy_forms',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -160,6 +166,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+cloudinary.config(
+    cloud_name = "amutyota",
+    api_key = "527629637316126",
+    api_secret = "e1CxJa86WidrDvt34odFdqkCL1o"
+)
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())

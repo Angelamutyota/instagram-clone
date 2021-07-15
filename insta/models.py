@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True, default='No bio')
-    profile= models.ImageField(upload_to = 'images/',default='SOME IMAGE')
+    profile= CloudinaryField( 'images/',default='SOME IMAGE')
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
@@ -23,7 +24,7 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=name).all()
 
 class Post(models.Model):
-    image = models.ImageField(upload_to='posts/')
+    image = CloudinaryField('posts/')
     name = models.CharField(max_length=250, blank=True)
     caption = models.CharField(max_length=250, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
